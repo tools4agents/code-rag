@@ -132,7 +132,11 @@ Web UI также используется для:
 
 Примеры:
 - `purpose`: `code_search`, `atlas_graph`, `docs_search`
-- `chunk_strategy`: `simple_file_chunks`, `code_aware`, `markdown_headings`, `code_atlas_provider`
+- `chunk_strategy`:
+    - `simple_file_chunks`: простой чанкинг по символам (плагин `rag4code.chunker` -> `simple`).
+    - `code_aware`: умный чанкинг по функциям/классам через `code-analysis-core` (плагин `rag4code.chunker` -> `code_aware`).
+    - `markdown_headings`: чанкинг документации.
+    - `code_atlas_provider`: чанки, пришедшие через push-события от `code-atlas`.
 
 ## 7. Плагинные контракты
 
@@ -142,6 +146,11 @@ Web UI также используется для:
 - `rag4code.chunker`
 
 Базовое решение зафиксировано в [ADR 002](adr/002-plugin-system-entrypoints.md).
+
+### 7.1. Chunker Plugins
+- **Simple Chunker**: Реализует стратегию `simple_file_chunks`. Не зависит от языка, режет текст на перекрывающиеся блоки.
+- **Code Aware Chunker**: Реализует стратегию `code_aware`. Использует библиотеку `code-analysis-core` для выделения логических блоков (функций, классов) в Python-коде.
+
 
 ## 8. Интеграционные границы c code-atlas
 
