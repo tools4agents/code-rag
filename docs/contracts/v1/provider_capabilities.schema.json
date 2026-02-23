@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProviderCapabilities",
+  "type": "object",
+  "required": ["provider", "capabilities"],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["features"],
+      "properties": {
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "max_batch_size": {"type": "integer", "minimum": 1},
+            "max_chunk_size": {"type": "integer", "minimum": 1}
+          },
+          "additionalProperties": false
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "supports_async": {"type": "boolean"},
+            "supports_reconcile": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

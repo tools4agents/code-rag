@@ -14,6 +14,7 @@
 Документ фиксирует Stage 2 для `code-rag`:
 - архитектурные границы;
 - контракт интеграции `code-atlas -> code-rag`;
+- Web UI требования и границу Web UI -> `code-rag` API (без детализации схем);
 - правила хранения и аудита;
 - reconcile протокол в режимах `dry_run` и `fix`.
 
@@ -257,23 +258,67 @@ Recommended codes:
 
 ## 13. Test Design for Stage 2
 
-### Level 1 Unit
-- namespace key builder;
-- metadata mapping;
-- reconcile diff classifier.
+Цель раздела: зафиксировать набор проверок по уровням L1–L4, достаточный для Stage 3 (Planning) без додумывания.
 
-### Level 2 Contract
-- push payload schema validation;
-- acceptance response format;
-- error envelope shape.
+### Level 1 Unit (Logic / Intent)
+Фокус: чистая логика без IO.
+- Namespace key builder
+  - входы: `project_key`, `purpose`, `chunk_strategy`
+  - ожидаемое: детерминированный формат как в [`docs/architecture/stage-2-specification.md:79`](docs/architecture/stage-2-specification.md:79)
+- Metadata mapping
+  - вход: push item (или локальный индексируемый объект)
+  - ожидаемое: заполнение обязательных полей `Identity`, `Chunk Context`, `Source Audit`, `Index Audit` как в [`docs/architecture/stage-2-specification.md:147`](docs/architecture/stage-2-specification.md:147)
+- Reconcile diff classifier
+  - случаи: `missing`, `stale`, `orphan` как в [`docs/architecture/stage-2-specification.md:186`](docs/architecture/stage-2-specification.md:186)
 
-### Level 3 System
-- `code-atlas` push emulation -> index write on real vector backend.
-- reconcile `fix` on real backend with prepared drift set.
+### Level 2 Contract (Component / Mocked)
+Фокус: проверка форм контрактов на границах (schema-first) и стабильного error envelope.
+- Push-first contract
+  - валидировать batch envelope и item contract по структуре из [`docs/architecture/stage-2-specification.md:92`](docs/architecture/stage-2-specification.md:92)
+  - негативные кейсы: пустой `content`, неизвестный `contract_version`, отсутствующий `node_id`
+- Acceptance response
+  - формат ответа и ошибки как в [`docs/architecture/stage-2-specification.md:130`](docs/architecture/stage-2-specification.md:130)
+- Error model
+  - envelope shape и обязательные поля как в [`docs/architecture/stage-2-specification.md:236`](docs/architecture/stage-2-specification.md:236)
+- Query contract
+  - required params и shape результата как в [`docs/architecture/stage-2-specification.md:220`](docs/architecture/stage-2-specification.md:220)
 
-### Level 4 Environment
-- isolated sandbox with HSM assembled stack;
-- end-to-end flow index query reconcile dry_run reconcile fix.
+### Level 3 System (Integration / Real World)
+Фокус: реальные зависимости (vector backend, embedder) без UI.
+- Local indexing happy path
+  - index -> query: запись чанков и поиск по ним на реальном backend
+  - проверка: наличие audit metadata в выдаче
+- Push-first emulation
+  - эмуляция `code-atlas` push -> index write on real vector backend
+- Reconcile
+  - `dry_run` возвращает diff отчет без изменений
+  - `fix` применяет upsert/reindex/delete согласно политике и возвращает applied actions report
+
+### Level 4 Environment (E2E / High-Fidelity)
+Фокус: HSM assembled stack и полный пользовательский сценарий.
+- Sandbox bootstrapping
+  - запуск assembled окружения (HSM) с реальными зависимостями
+- End-to-end flows
+  - create/select project -> configure chunker/embedder -> start indexing -> observe progress -> search
+  - reconcile `dry_run` -> reconcile `fix` -> verify consistency
+- Web UI flows (в паре с backend)
+  - отображение списка проектов и переключение между ними
+  - отображение статуса готовности и прогресса индексации
+  - изменение настроек chunker (`chunk_size`, `chunk_overlap`) и embedder model (Stage 2: `qwen3-embedding`)
+
+#### Frontend & Visual Assurance (методология)
+Цель: гарантировать не только функциональную корректность UI, но и визуальную целостность.
+
+- Cross-browser coverage
+  - основные движки: Chromium (Blink) и Firefox (Gecko)
+  - Safari (WebKit) в Stage 2 не является обязательным таргетом
+- Visual Regression Testing
+  - инструмент: Playwright screenshots (golden master)
+  - правила: избегать флакеров (динамический контент, timestamps), стабилизировать данные через тестовый seed
+  - стратегия: критические экраны (project list, project details/status, settings) покрываются визуальными снапшотами
+- E2E сценарии UI
+  - happy path: create/select project -> configure -> start indexing -> observe progress -> search
+  - error path: backend unavailable / provider unavailable -> корректный error envelope отображается пользователю
 
 ## 14. Risks and Mitigations
 
@@ -286,7 +331,33 @@ Recommended codes:
 3. **Provider mismatch in runtime**
    - mitigate by HSM implies declarations and startup validation.
 
-## 15. Acceptance Criteria
+## 15. Web UI (React) Requirements
+
+Web UI является отдельным frontend сервисом (React) и поставляется как Docker container.
+
+### 15.1 Responsibilities
+- Web UI управляет конфигурацией проектов и отображением статуса.
+- Web UI работает в Docker-контейнере и не читает файловую систему хоста напрямую.
+- Backend `code-rag` на текущем этапе запускается как локальный `uv` VES runtime (host process) и имеет доступ к файловой системе ОС.
+  - Выбор источников (папок проектов) осуществляется через backend API.
+  - Для безопасности и воспроизводимости рекомендуется фиксировать `project_root` явно (даже если технически backend имеет доступ ко всем путям).
+
+### 15.2 Required capabilities (Stage 2 subset)
+UI должен уметь отображать список существующих проектов и переключаться между ними.
+
+Для каждого проекта UI должен уметь:
+1. Выбирать проект-источник (папку с текстовыми файлами) для которого поддерживаем vector index и семантический поиск.
+   - Базовая стратегия именования: name по папке, но пользователь может изменить display name.
+2. Отображать прогресс чанкирования/индексации (progress bar) и текущий статус готовности.
+3. Выбирать chunker strategy и настройки.
+   - Stage 2: только file chunker.
+   - Настройки: `chunk_size`, `chunk_overlap`.
+4. Выбирать embedder model и параметры использования.
+   - Stage 2: только `qwen3-embedding`.
+
+Примечание: точный backend API контракт для Web UI фиксируется отдельным Contract-First документом/схемой на Stage 3.
+
+## 16. Acceptance Criteria
 
 1. Архитектура и спецификация Stage 2 зафиксированы в документации.
 2. Push-first контракт описан и валидируем.

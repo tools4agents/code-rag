@@ -10,6 +10,8 @@
 
 `code-rag` это автономный сервис семантического поиска по коду в экосистеме HyperGraph.
 
+В терминах HSM центральная сборка `services/code-rag` рассматривается как тонкий слой интерфейсов (например MCP/CLI), который подключает backend и frontend как services.
+
 На Stage 2 принята модель:
 - автономная работа `code-rag` без обязательной зависимости от `code-atlas`;
 - опциональная интеграция с `code-atlas` через Push-first контракт;
@@ -44,6 +46,11 @@
 - docker контейнеры;
 - изолированные python окружения VES.
 
+Stage 2 уточнение:
+- Web UI — это **service** в терминах HSM и поставляется как Docker container.
+- Backend `code-rag` — это **service** в терминах HSM и на текущем этапе реализован как `uv` VES runtime (host process).
+- MCP слой — тонкий адаптер над backend (Thin MCP Layer) и выступает точкой входа в сборку.
+
 Связка делается через `implies`:
 - абстрактный клиент заявляет потребность в абстрактном сервисе;
 - конкретная реализация клиента связывается с конкретным сервисом.
@@ -54,12 +61,16 @@
 
 ## 4. Компонентная схема
 
+Примечание по деплою (Stage 2):
+- Backend `code-rag` запускается локально как `uv` VES runtime (host process).
+- Web UI — отдельный React frontend сервис в Docker-контейнере, общается с backend по HTTP API и не имеет прямого доступа к файловой системе хоста.
+
 ```mermaid
 flowchart LR
     User[User]
     CLI[CLI]
     MCP[MCP]
-    WebUI[Web UI]
+    WebUI[Web UI Service]
     Atlas[Code Atlas]
     Core[Code Rag Core]
 
@@ -72,16 +83,17 @@ flowchart LR
     subgraph Runtime[HSM Managed Services]
         VService[Vector DB Service]
         EService[Embedding Service]
+        WebUIRuntime[Web UI Service]
     end
 
     Reconcile[Reconcile Worker]
 
     User --> CLI
     User --> MCP
-    User --> WebUI
+    User --> WebUIRuntime
     CLI --> Core
     MCP --> Core
-    WebUI -->|status progress project settings| Core
+    WebUIRuntime -->|status progress project settings| Core
     Atlas -->|Push Events| Core
     Core --> VClient
     Core --> EClient
