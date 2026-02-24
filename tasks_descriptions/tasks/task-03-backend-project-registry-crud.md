@@ -25,7 +25,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 Backend Registry: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:103)
-- API-контракт для совместимости с UI: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+- API-контракт для совместимости с UI: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
@@ -41,8 +41,8 @@
 - Зависит от: [`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`](tasks_descriptions/tasks/task-01-contract-first-package-v1.md), [`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`](tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md)
 
 ## Execution Status
-- Current State: implemented in core (`ProjectRegistry` CRUD + delete) with unit and contract-level coverage
+- Current State: implemented in backend component core (`ProjectRegistry` CRUD + delete) with unit and contract-level coverage
 - Next Step: добавить API-layer адаптер над use-cases registry
 - Blockers: none
 - Contract Changes: present
-- Verification: `uv run pytest tests/unit/test_project_registry.py`
+- Verification: `cd services/code-rag-backend && uv run pytest tests/unit/test_project_registry.py`

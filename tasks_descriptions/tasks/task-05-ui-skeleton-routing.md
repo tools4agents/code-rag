@@ -24,7 +24,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 по UI skeleton/routing: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:110)
-- API граница для интеграции UI: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+- API граница для интеграции UI: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).

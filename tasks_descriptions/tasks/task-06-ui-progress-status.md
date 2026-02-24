@@ -24,7 +24,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 по UI progress/status: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:114)
-- Контракт API статусов: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+- Контракт API статусов: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).

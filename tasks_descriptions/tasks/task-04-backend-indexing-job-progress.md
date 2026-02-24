@@ -14,11 +14,11 @@
 6. Покрыть модель и transitions unit tests.
 
 ## Критерии готовности (Definition of Done)
-- [ ] Backend возвращает status и progress в стабильной форме.
-- [ ] UI может использовать данные для корректного progress bar.
-- [ ] Ошибки и невалидные transitions обрабатываются предсказуемо.
-- [ ] В status/details отражены model-specific параметры запуска индексации.
-- [ ] Unit tests покрывают основной lifecycle и edge cases.
+- [x] Backend возвращает status и progress в стабильной форме.
+- [x] UI может использовать данные для корректного progress bar.
+- [x] Ошибки и невалидные transitions обрабатываются предсказуемо.
+- [x] В status/details отражены model-specific параметры запуска индексации.
+- [x] Unit tests покрывают основной lifecycle и edge cases.
 
 ## Architecture Context References
 - Требование статусов/прогресса в UI: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:351)
@@ -26,7 +26,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 по Indexing Job: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:107)
-- UI API контракт статусов: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+- UI API контракт статусов: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
@@ -42,8 +42,8 @@
 - Зависит от: [`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`](tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md), [`tasks_descriptions/tasks/task-03-backend-project-registry-crud.md`](tasks_descriptions/tasks/task-03-backend-project-registry-crud.md)
 
 ## Execution Status
-- Current State: planned
-- Next Step: согласовать state model и структуру progress payload
+- Current State: implemented in backend component core with stable lifecycle/status contract and test coverage
+- Next Step: реализовать API-layer адаптеры поверх `IndexingJobService` (endpoints start/status/stop + SSE integration)
 - Blockers: none
-- Contract Changes: none
-- Verification: создан planning artifact (`tasks_descriptions/tasks/task-04-backend-indexing-job-progress.md`)
+- Contract Changes: present
+- Verification: `cd services/code-rag-backend && uv run pytest` (`49 passed`), suite docs updated in [`services/code-rag-backend/docs/testing/suites/unit-indexing-job-lifecycle.md`](services/code-rag-backend/docs/testing/suites/unit-indexing-job-lifecycle.md) and [`services/code-rag-backend/docs/testing/suites/openapi-web-ui.md`](services/code-rag-backend/docs/testing/suites/openapi-web-ui.md)

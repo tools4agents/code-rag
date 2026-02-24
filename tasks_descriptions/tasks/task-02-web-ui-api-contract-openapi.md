@@ -3,12 +3,12 @@
 ## Контекст
 - Для Stage 3 нужен формальный Web API contract для UI-слоя.
 - Входные требования зафиксированы в [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md), секции 3 и 5.1.
-- Текущий артефакт: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml).
+- Текущий артефакт: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml).
 
 ## Шаги реализации
 1. Проверить, что в OpenAPI определены resources: Projects, Indexing, Settings catalogs.
 2. Сверить обязательные operations: list/create/update/details для Projects; start/status/stop для Indexing; list catalogs для settings.
-3. Проверить единый формат ошибок через [`docs/contracts/v1/error_envelope.schema.json`](docs/contracts/v1/error_envelope.schema.json).
+3. Проверить единый формат ошибок через [`services/code-rag-backend/docs/contracts/v1/error_envelope.schema.json`](services/code-rag-backend/docs/contracts/v1/error_envelope.schema.json).
 4. Зафиксировать в контракте model-specific поля embedder settings на основе исследования [`tasks_descriptions/research/reasearch_results.md`](tasks_descriptions/research/reasearch_results.md):
    - `instruction` (query-side, особенно для `qwen3-embedding`),
    - `dimensions` (optional, при поддержке моделью),
@@ -28,7 +28,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 для Web API: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:62)
-- Целевой OpenAPI артефакт: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+- Целевой OpenAPI артефакт: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
@@ -36,15 +36,15 @@
 - Обязательные проверки по задаче:
   - Error envelope shape и обязательные поля: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:281).
   - Query contract required params и response shape: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:283).
-  - Валидация payloads на контрактных границах: [`docs/contracts/contract-tests.md`](docs/contracts/contract-tests.md:1).
+  - Валидация payloads на контрактных границах: [`services/code-rag-backend/docs/contracts/contract-tests.md`](services/code-rag-backend/docs/contracts/contract-tests.md:1).
   - Stage 3 требование переноса test design в конкретные cases/harness: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:83).
 
 ## Зависимости
 - Зависит от: [`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`](tasks_descriptions/tasks/task-01-contract-first-package-v1.md)
 
 ## Execution Status
-- Current State: implemented (OpenAPI expanded with embedder model-specific fields and validated by contract tests)
+ - Current State: implemented in backend component repo (OpenAPI expanded with embedder model-specific fields and validated by contract tests)
 - Next Step: поддерживать OpenAPI/L2 tests при изменении Web API
 - Blockers: none
 - Contract Changes: present
-- Verification: `uv run pytest tests/contracts/test_openapi_contract.py`
+- Verification: `cd services/code-rag-backend && uv run pytest tests/contracts/test_openapi_contract.py`

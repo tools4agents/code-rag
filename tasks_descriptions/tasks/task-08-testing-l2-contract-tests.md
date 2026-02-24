@@ -3,7 +3,7 @@
 ## Контекст
 - Stage 3 требует перевести test design в конкретные L2 contract tests.
 - Требования: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md), секции 4 и 5.4.
-- Тесты должны валидировать payloads на контрактных границах по схемам `docs/contracts/v1/`.
+- Тесты должны валидировать payloads на контрактных границах по схемам `services/code-rag-backend/docs/contracts/v1/`.
 
 ## Шаги реализации
 1. Настроить test harness для schema-based validation (request/response payloads).
@@ -16,7 +16,7 @@
 6. Документировать способ запуска L2 тестов и expected output.
 
 ## Критерии готовности (Definition of Done)
-- [ ] L2 тесты валидируют payloads по всем схемам `v1/`.
+- [ ] L2 тесты валидируют payloads по всем схемам `services/code-rag-backend/docs/contracts/v1/`.
 - [ ] Негативные кейсы стабильно детектируются.
 - [ ] Ошибки проверяются на соответствие error envelope.
 - [ ] Покрыты отличия поведения/параметров для `qwen3-embedding` и `bge-m3`.
@@ -28,7 +28,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 Testing: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:120)
-- Контрактные схемы для L2: [`docs/contracts/v1/`](docs/contracts/v1/)
+- Контрактные схемы для L2: [`services/code-rag-backend/docs/contracts/v1/`](services/code-rag-backend/docs/contracts/v1/)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
@@ -38,7 +38,7 @@
   - Acceptance response: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:279).
   - Error model / envelope: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:281).
   - Query contract: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:283).
-  - Детализированная матрица L2 кейсов по схемам: [`docs/contracts/contract-tests.md`](docs/contracts/contract-tests.md:1).
+  - Детализированная матрица L2 кейсов по схемам: [`services/code-rag-backend/docs/contracts/contract-tests.md`](services/code-rag-backend/docs/contracts/contract-tests.md:1).
   - Модель-специфичные L2 кейсы (`qwen3-embedding`, `bge-m3`): [`tasks_descriptions/research/reasearch_results.md`](tasks_descriptions/research/reasearch_results.md:450).
 
 ## Зависимости

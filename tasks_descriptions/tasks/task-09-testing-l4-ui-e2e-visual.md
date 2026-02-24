@@ -24,7 +24,7 @@
 
 ## Specification References
 - Входная спецификация Stage 3 Testing: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:120)
-- OpenAPI контракт для E2E-потоков UI: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+- OpenAPI контракт для E2E-потоков UI: [`services/code-rag-backend/docs/contracts/web-ui.openapi.yaml`](services/code-rag-backend/docs/contracts/web-ui.openapi.yaml)
 
 ## Test Design References
 - Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
