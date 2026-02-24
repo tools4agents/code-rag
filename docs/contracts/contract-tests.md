@@ -2,6 +2,11 @@
 
 Этот документ фиксирует L2 Contract tests и их связь со схемами в [`docs/contracts/v1/`](docs/contracts/v1/).
 
+Навигационный индекс по тестам проекта: [`docs/testing/test-map.md`](../testing/test-map.md).
+Детальное описание L2 suites:
+- [`docs/testing/suites/contracts-v1.md`](../testing/suites/contracts-v1.md)
+- [`docs/testing/suites/openapi-web-ui.md`](../testing/suites/openapi-web-ui.md)
+
 ## 1) Push-first (Batch)
 
 **Schema**: [`docs/contracts/v1/push_batch.schema.json`](docs/contracts/v1/push_batch.schema.json)
@@ -98,7 +103,16 @@
 **Schema**: [`docs/contracts/v1/provider_capabilities.schema.json`](docs/contracts/v1/provider_capabilities.schema.json)
 
 ### Valid
-- `provider` + `capabilities.features[]`
+- `provider = "ollama"`, `model = "qwen3-embedding"`, `capabilities.supports_dimensions = true`, `capabilities.supports_instruction = true`, `capabilities.max_context_tokens > 0`
+- `provider = "ollama"`, `model = "bge-m3"`, `capabilities.supports_dimensions = false`, `capabilities.supports_instruction = false`, `capabilities.max_context_tokens > 0`
+- optional `recommended_query_instruction` задан непустой строкой
+- optional `supported_dimensions` задан объектом c `min` и `max`
 
 ### Invalid
-- отсутствует `capabilities.features`
+- отсутствует `model`
+- отсутствует `capabilities.supports_dimensions`
+- отсутствует `capabilities.supports_instruction`
+- отсутствует `capabilities.max_context_tokens`
+- `max_context_tokens = 0`
+- `recommended_query_instruction = ""`
+- `supported_dimensions` без `min` или `max`
