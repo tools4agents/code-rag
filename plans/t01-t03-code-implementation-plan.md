@@ -13,15 +13,15 @@
 - Синхронизирована матрица L2-кейсов для provider capabilities.
 
 ### Что реализовать в Code mode
-1. Добавить L2 schema tests для всех схем `docs/contracts/v1/`:
+1. Добавить L2 schema tests для всех схем `services/code-rag-backend/docs/contracts/v1/`:
    - positive/negative cases для push/reconcile/query/error/provider capabilities;
    - qwen3-embedding vs bge-m3 кейсы.
 2. Добавить фикстуры payloads (валидные и невалидные).
 3. Добавить воспроизводимый запуск в тестовом контуре.
 
 ### Артефакты
-- `tests/contracts/test_v1_schemas.py`
-- `tests/contracts/fixtures/*.json`
+- `services/code-rag-backend/tests/contracts/test_v1_schemas.py`
+- `services/code-rag-backend/tests/contracts/fixtures/*.json`
 
 ---
 
@@ -41,7 +41,7 @@
    - Catalogs: chunkers/embedders.
 
 ### Артефакты
-- `tests/contracts/test_openapi_contract.py`
+- `services/code-rag-backend/tests/contracts/test_openapi_contract.py`
 
 ---
 
@@ -63,18 +63,18 @@
 4. Согласовать формат ответов с OpenAPI `Project`/`ProjectList`.
 
 ### Артефакты
-- `tests/unit/test_project_registry.py`
-- при необходимости: update `src/code_rag/core/project_registry.py`
+- `services/code-rag-backend/tests/unit/test_project_registry.py`
+- при необходимости: update `services/code-rag-backend/src/code_rag_backend/core/project_registry.py`
 
 ---
 
 ## Проверки и критерии приемки
 1. Все L2 schema tests и OpenAPI tests проходят.
 2. Unit tests для registry проходят.
-3. Контрактная консистентность между `docs/contracts/v1/*.schema.json` и `docs/contracts/web-ui.openapi.yaml` подтверждена тестами.
+3. Контрактная консистентность между `services/code-rag-backend/docs/contracts/v1/*.schema.json` и `services/code-rag-backend/docs/contracts/web-ui.openapi.yaml` подтверждена тестами.
 4. Изменения не нарушают DDD границы: core отдельно от интерфейсного слоя.
 
 ## Команды прогона (Code mode)
-- `uv run pytest tests/contracts`
-- `uv run pytest tests/unit`
-- `uv run pytest`
+- `cd services/code-rag-backend && uv run pytest tests/contracts`
+- `cd services/code-rag-backend && uv run pytest tests/unit`
+- `cd services/code-rag-backend && uv run pytest`

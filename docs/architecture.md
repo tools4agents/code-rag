@@ -40,7 +40,9 @@
 
 ## 3. HSM модель для code-rag
 
-`services/code-rag/packages` это Python-пакеты клиентов, которые взаимодействуют с внешними сервисами.
+`services/code-rag-backend/packages` это Python-пакеты клиентов, которые взаимодействуют с внешними сервисами.
+
+Root `services/code-rag` не хранит backend packages и остается thin MCP + orchestration слоем.
 
 Сервисы запускаются HSM как:
 - docker контейнеры;
