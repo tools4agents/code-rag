@@ -25,6 +25,25 @@
 - [ ] UI корректно учитывает различия `qwen3-embedding` vs `bge-m3` (видимость/валидация model-specific полей).
 - [ ] Тесты покрывают happy path и невалидный ввод.
 
+## Architecture Context References
+- UI требования к настройкам chunker/embedder: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:352)
+- Общая архитектура и границы взаимодействия: [`docs/architecture.md`](docs/architecture.md)
+
+## Specification References
+- Входная спецификация Stage 3 по UI settings: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:117)
+- API контракты settings/catalogs: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+
+## Test Design References
+- Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
+- Релевантные уровни для задачи:
+  - L2 Contract для сериализации settings payload и error envelope: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:274).
+  - L4 Environment для UI forms в пользовательском сценарии: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:297).
+  - Frontend & Visual Assurance: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:309).
+- Обязательные проверки по задаче:
+  - Web UI settings chunker/embedder как часть UI flow: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:307).
+  - E2E happy path с configure step: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:320).
+  - L2/L3 модель-специфичные кейсы qwen3-embedding vs bge-m3: [`tasks_descriptions/research/reasearch_results.md`](tasks_descriptions/research/reasearch_results.md:450).
+
 ## Зависимости
 - Зависит от: [`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`](tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md), [`tasks_descriptions/tasks/task-05-ui-skeleton-routing.md`](tasks_descriptions/tasks/task-05-ui-skeleton-routing.md)
 

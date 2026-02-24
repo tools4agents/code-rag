@@ -22,6 +22,25 @@
 - [ ] Покрыты отличия поведения/параметров для `qwen3-embedding` и `bge-m3`.
 - [ ] Тесты воспроизводимо запускаются локально и в CI.
 
+## Architecture Context References
+- Контрактные границы и error model Stage 2: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:64)
+- Общая архитектура сервиса: [`docs/architecture.md`](docs/architecture.md)
+
+## Specification References
+- Входная спецификация Stage 3 Testing: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:120)
+- Контрактные схемы для L2: [`docs/contracts/v1/`](docs/contracts/v1/)
+
+## Test Design References
+- Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
+- Релевантный уровень для задачи: L2 Contract (Component/Mocked): [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:274).
+- Обязательные проверки по задаче:
+  - Push-first contract и негативные кейсы: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:276).
+  - Acceptance response: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:279).
+  - Error model / envelope: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:281).
+  - Query contract: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:283).
+  - Детализированная матрица L2 кейсов по схемам: [`docs/contracts/contract-tests.md`](docs/contracts/contract-tests.md:1).
+  - Модель-специфичные L2 кейсы (`qwen3-embedding`, `bge-m3`): [`tasks_descriptions/research/reasearch_results.md`](tasks_descriptions/research/reasearch_results.md:450).
+
 ## Зависимости
 - Зависит от: [`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`](tasks_descriptions/tasks/task-01-contract-first-package-v1.md), [`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`](tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md)
 

@@ -23,6 +23,24 @@
 - [ ] Описан и воспроизводим путь валидации sample payloads.
 - [ ] Provider capabilities отражают различия `qwen3-embedding` vs `bge-m3`.
 
+## Architecture Context References
+- Базовая архитектура и границы компонентов: [`docs/architecture.md`](docs/architecture.md)
+- Контрактные принципы и границы Stage 2: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:64)
+
+## Specification References
+- Входная спецификация Stage 3: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:35)
+- Политика contract package и версионирования: [`docs/contracts/README.md`](docs/contracts/README.md)
+
+## Test Design References
+- Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
+- Релевантный уровень для задачи: L2 Contract (schema-first): [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:274).
+- Обязательные проверки по задаче:
+  - Push-first contract и негативные кейсы: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:276).
+  - Acceptance response shape: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:279).
+  - Error envelope: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:281).
+  - Query contract: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:283).
+  - Практическая матрица L2 payload validation: [`docs/contracts/contract-tests.md`](docs/contracts/contract-tests.md:1).
+
 ## Зависимости
 - Нет (entry task).
 

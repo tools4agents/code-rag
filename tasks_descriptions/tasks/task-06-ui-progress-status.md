@@ -18,6 +18,25 @@
 - [ ] Ошибки отображаются предсказуемо и не ломают экран.
 - [ ] Component tests покрывают основные status transitions.
 
+## Architecture Context References
+- Требование отображения progress/status в UI: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:351)
+- Общая архитектура UI-слоя: [`docs/architecture.md`](docs/architecture.md)
+
+## Specification References
+- Входная спецификация Stage 3 по UI progress/status: [`plans/stage-3-planning-input.md`](plans/stage-3-planning-input.md:114)
+- Контракт API статусов: [`docs/contracts/web-ui.openapi.yaml`](docs/contracts/web-ui.openapi.yaml)
+
+## Test Design References
+- Канонический дизайн тестов L1–L4: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:259).
+- Релевантные уровни для задачи:
+  - L2 Contract для status/error payloads: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:274).
+  - L4 Environment для UI status/progress flows: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:297).
+  - Frontend & Visual Assurance: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:309).
+- Обязательные проверки по задаче:
+  - Отображение статуса готовности и прогресса индексации: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:306).
+  - E2E happy path с наблюдением progress/status: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:320).
+  - Error path при недоступности backend/provider: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:321).
+
 ## Зависимости
 - Зависит от: [`tasks_descriptions/tasks/task-04-backend-indexing-job-progress.md`](tasks_descriptions/tasks/task-04-backend-indexing-job-progress.md), [`tasks_descriptions/tasks/task-05-ui-skeleton-routing.md`](tasks_descriptions/tasks/task-05-ui-skeleton-routing.md)
 
@@ -27,4 +46,3 @@
 - Blockers: none
 - Contract Changes: none
 - Verification: создан planning artifact (`tasks_descriptions/tasks/task-06-ui-progress-status.md`)
-
