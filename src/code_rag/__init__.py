@@ -1,3 +1,5 @@
-from .core.engine import RagEngine
+"""Thin MCP layer package for code-rag root repository."""
 
-__all__ = ["RagEngine"]
+from .mcp.gateway import BackendClientProtocol, McpGateway
+
+__all__ = ["McpGateway", "BackendClientProtocol"]

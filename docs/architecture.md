@@ -65,6 +65,43 @@ Stage 2 уточнение:
 - Backend `code-rag` запускается локально как `uv` VES runtime (host process).
 - Web UI — отдельный React frontend сервис в Docker-контейнере, общается с backend по HTTP API и не имеет прямого доступа к файловой системе хоста.
 
+### 4.1 Repository boundaries (updated)
+
+В проекте принята repository-level изоляция компонентов:
+
+- Root `services/code-rag` — только thin MCP слой, HSM-манифесты, общие task-артефакты и общая архитектурная документация.
+- `services/code-rag-backend` — отдельный component repo: backend код, его контракты, тесты и документация.
+- `services/code-rag-frontend` — отдельный component repo: frontend код, его контракты/документация.
+
+```mermaid
+flowchart TB
+    subgraph RootRepo[Root Repo: services/code-rag]
+        MCP[Thin MCP Layer]
+        HSM[HSM Manifests/Registry]
+        Tasks[Shared Tasks]
+        Arch[Shared Architecture Docs]
+    end
+
+    subgraph BackendRepo[Component Repo: services/code-rag-backend]
+        BCode[Backend Source]
+        BContracts[Backend Contracts]
+        BTests[Backend Tests]
+        BDocs[Backend Docs]
+    end
+
+    subgraph FrontendRepo[Component Repo: services/code-rag-frontend]
+        FCode[Frontend Source]
+        FContracts[Frontend Contracts]
+        FTests[Frontend Tests]
+        FDocs[Frontend Docs]
+    end
+
+    MCP -->|HTTP/MCP adapter calls| BCode
+    FCode -->|HTTP API| BCode
+    HSM --> BackendRepo
+    HSM --> FrontendRepo
+```
+
 ```mermaid
 flowchart LR
     User[User]

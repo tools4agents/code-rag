@@ -1,0 +1,21 @@
+name: code-rag-frontend
+description: Local service code-rag-frontend
+type: service
+container_name: null
+network_aliases: []
+ports: []
+volumes: []
+env: {}
+env_file: []
+sources:
+  prod:
+    type: local
+    path: services/code-rag-frontend
+  dev:
+    type: local
+    path: services/code-rag-frontend
+dependencies: []
+deployment_profiles:
+  default:
+    mode: managed
+    runtime: docker

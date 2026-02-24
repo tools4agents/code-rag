@@ -1,0 +1,21 @@
+name: code-rag-backend
+description: Local service code-rag-backend
+type: service
+container_name: null
+network_aliases: []
+ports: []
+volumes: []
+env: {}
+env_file: []
+sources:
+  prod:
+    type: local
+    path: services/code-rag-backend
+  dev:
+    type: local
+    path: services/code-rag-backend
+dependencies: []
+deployment_profiles:
+  default:
+    mode: managed
+    runtime: uv
