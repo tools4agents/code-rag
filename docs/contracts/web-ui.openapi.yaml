@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: code-rag Web UI API
   version: 1.0.0
-  description: API для Web UI (FastAPI). Base path: /api/v1
+  description: "API для Web UI (FastAPI). Base path: /api/v1"
 
 servers:
   - url: /api/v1
@@ -334,7 +334,7 @@ components:
 
     EmbedderCatalogItem:
       type: object
-      required: [type, name, defaults]
+      required: [type, name, defaults, capabilities]
       properties:
         type:
           type: string
@@ -342,6 +342,23 @@ components:
           type: string
         defaults:
           $ref: "#/components/schemas/EmbedderSettings"
+        capabilities:
+          $ref: "#/components/schemas/EmbedderCapabilities"
+
+    EmbedderCapabilities:
+      type: object
+      required:
+        [supports_dimensions, supports_instruction, max_context_tokens]
+      properties:
+        supports_dimensions:
+          type: boolean
+        supports_instruction:
+          type: boolean
+        max_context_tokens:
+          type: integer
+          minimum: 1
+        recommended_query_instruction:
+          type: string
 
     EmbedderSettings:
       type: object
@@ -352,7 +369,23 @@ components:
           enum: [ollama]
         model:
           type: string
-          enum: [qwen3-embedding]
+          enum: [qwen3-embedding, bge-m3]
+        instruction:
+          type: string
+          description: Optional query-side instruction (recommended for qwen3-embedding).
+        dimensions:
+          type: integer
+          minimum: 1
+          maximum: 4096
+          description: Optional output dimensions when supported by selected model.
+        truncate:
+          type: boolean
+          default: true
+          description: Truncate long input when it exceeds model context window.
+        provider_options:
+          type: object
+          description: Provider-specific options passed through as-is.
+          additionalProperties: true
 
     SearchRequest:
       type: object
