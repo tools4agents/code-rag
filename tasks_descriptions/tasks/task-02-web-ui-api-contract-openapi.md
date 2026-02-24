@@ -43,8 +43,8 @@
 - Зависит от: [`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`](tasks_descriptions/tasks/task-01-contract-first-package-v1.md)
 
 ## Execution Status
-- Current State: planned
-- Next Step: выполнить ревью OpenAPI на полноту resources/operations
+- Current State: implemented (OpenAPI expanded with embedder model-specific fields and validated by contract tests)
+- Next Step: поддерживать OpenAPI/L2 tests при изменении Web API
 - Blockers: none
-- Contract Changes: none
-- Verification: создан planning artifact (`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`)
+- Contract Changes: present
+- Verification: `uv run pytest tests/contracts/test_openapi_contract.py`

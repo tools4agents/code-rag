@@ -45,8 +45,8 @@
 - Нет (entry task).
 
 ## Execution Status
-- Current State: planned
-- Next Step: выполнить review покрытия и согласованности схем со Stage 2
+- Current State: implemented (v1 schemas reviewed, provider capabilities updated, L2 contract tests added)
+- Next Step: поддерживать тест-матрицу при изменении схем `v1/`
 - Blockers: none
-- Contract Changes: none
-- Verification: создан planning artifact (`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`)
+- Contract Changes: present
+- Verification: `uv run pytest tests/contracts/test_v1_schemas.py`

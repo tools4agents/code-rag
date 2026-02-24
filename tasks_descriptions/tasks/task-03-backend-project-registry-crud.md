@@ -7,16 +7,17 @@
 
 ## Шаги реализации
 1. Спроектировать модель `ProjectRegistry` в backend core (entity + repository contract).
-2. Реализовать CRUD-операции: list/create/update/get details.
+2. Реализовать CRUD-операции: list/create/update/get details/delete.
 3. Добавить валидацию входных данных (валидный path, уникальность project id/display name policy).
 4. Экспортировать use-cases в API-слой, совместимый с Web UI contract.
 5. Добавить unit tests для registry logic и error paths.
 
 ## Критерии готовности (Definition of Done)
 - [ ] Backend хранит и возвращает список проектов в стабильном формате.
-- [ ] Поддерживаются операции list/create/update/details.
+- [ ] Поддерживаются операции list/create/update/details/delete.
+- [ ] Удаление проекта отражается консистентно в API-контракте и ответах.
 - [ ] Ошибки возвращаются консистентно с error envelope policy.
-- [ ] Unit tests покрывают happy path и ключевые негативные сценарии.
+- [ ] Unit tests покрывают happy path и ключевые негативные сценарии, включая delete-path.
 
 ## Architecture Context References
 - Принцип отделения Core и интерфейсов: [`docs/architecture.md`](docs/architecture.md)
@@ -40,8 +41,8 @@
 - Зависит от: [`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`](tasks_descriptions/tasks/task-01-contract-first-package-v1.md), [`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`](tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md)
 
 ## Execution Status
-- Current State: planned
-- Next Step: определить backend модель и storage strategy для project registry
+- Current State: implemented in core (`ProjectRegistry` CRUD + delete) with unit and contract-level coverage
+- Next Step: добавить API-layer адаптер над use-cases registry
 - Blockers: none
-- Contract Changes: none
-- Verification: создан planning artifact (`tasks_descriptions/tasks/task-03-backend-project-registry-crud.md`)
+- Contract Changes: present
+- Verification: `uv run pytest tests/unit/test_project_registry.py`
