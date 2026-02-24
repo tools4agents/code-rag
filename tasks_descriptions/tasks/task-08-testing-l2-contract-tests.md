@@ -16,11 +16,11 @@
 6. Документировать способ запуска L2 тестов и expected output.
 
 ## Критерии готовности (Definition of Done)
-- [ ] L2 тесты валидируют payloads по всем схемам `services/code-rag-backend/docs/contracts/v1/`.
-- [ ] Негативные кейсы стабильно детектируются.
-- [ ] Ошибки проверяются на соответствие error envelope.
-- [ ] Покрыты отличия поведения/параметров для `qwen3-embedding` и `bge-m3`.
-- [ ] Тесты воспроизводимо запускаются локально и в CI.
+- [x] L2 тесты валидируют payloads по всем схемам `services/code-rag-backend/docs/contracts/v1/`.
+- [x] Негативные кейсы стабильно детектируются.
+- [x] Ошибки проверяются на соответствие error envelope.
+- [x] Покрыты отличия поведения/параметров для `qwen3-embedding` и `bge-m3`.
+- [x] Тесты воспроизводимо запускаются локально и в CI.
 
 ## Architecture Context References
 - Контрактные границы и error model Stage 2: [`docs/architecture/stage-2-specification.md`](docs/architecture/stage-2-specification.md:64)
@@ -45,8 +45,8 @@
 - Зависит от: [`tasks_descriptions/tasks/task-01-contract-first-package-v1.md`](tasks_descriptions/tasks/task-01-contract-first-package-v1.md), [`tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md`](tasks_descriptions/tasks/task-02-web-ui-api-contract-openapi.md)
 
 ## Execution Status
-- Current State: planned
-- Next Step: выбрать инструментарий schema validation и зафиксировать test matrix
+- Current State: completed
+- Next Step: использовать suite как baseline для последующих L3/L4 задач (`task-09` и интеграционные сценарии)
 - Blockers: none
 - Contract Changes: none
-- Verification: создан planning artifact (`tasks_descriptions/tasks/task-08-testing-l2-contract-tests.md`)
+- Verification: `uv run pytest tests/contracts/test_v1_schemas.py` в `services/code-rag-backend/` -> `38 passed`; актуализирован suite `services/code-rag-backend/docs/testing/suites/contracts-v1.md`
